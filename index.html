@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RB Solutions Construtora — Reformas Residenciais, Comerciais e Industriais</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        graphite: '#1E293B',
+        'graphite-dark': '#0F172A',
+        amber: { DEFAULT: '#D97706', dark: '#B45309' },
+        ink: '#334155',
+        muted: '#64748B',
+        cloud: '#F5F5F4'
+      },
+      fontFamily: { sans: ['Archivo', 'sans-serif'] }
+    }
+  }
+}
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Archivo', sans-serif; }
+
+  /* Placeholder de foto: padrão diagonal estilo planta baixa */
+  .photo-ph {
+    background-color: #263449;
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.045) 0, rgba(255,255,255,.045) 1px, transparent 1px, transparent 14px);
+    position: relative;
+  }
+  .photo-ph--light {
+    background-color: #E7E5E4;
+    background-image: repeating-linear-gradient(45deg, rgba(30,41,59,.06) 0, rgba(30,41,59,.06) 1px, transparent 1px, transparent 14px);
+  }
+  .photo-ph--warm {
+    background: linear-gradient(135deg, #D97706 0%, #92400E 100%);
+  }
+
+  /* Hero com foto + degradês de legibilidade (texto à esquerda, header no topo) */
+  .hero-bg {
+    background:
+      linear-gradient(180deg, rgba(15,23,42,.72) 0%, rgba(15,23,42,.25) 14%, rgba(15,23,42,0) 30%),
+      linear-gradient(95deg, rgba(15,23,42,.97) 0%, rgba(15,23,42,.88) 34%, rgba(15,23,42,.58) 56%, rgba(15,23,42,.16) 82%, rgba(15,23,42,.05) 100%),
+      url('banner-rb.png') right center / cover no-repeat,
+      #1E293B;
+  }
+  .hero-text { text-shadow: 0 2px 28px rgba(15,23,42,.65), 0 1px 4px rgba(15,23,42,.5); }
+
+  /* Fade-up ao rolar */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* Slider antes/depois */
+  .ba-wrap { position: relative; overflow: hidden; touch-action: none; cursor: ew-resize; }
+  .ba-after { position: absolute; inset: 0; clip-path: inset(0 0 0 50%); }
+  .ba-handle {
+    position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
+    background: #fff; transform: translateX(-1px); pointer-events: none;
+  }
+  .ba-handle::after {
+    content: '\2194'; position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 40px; height: 40px; border-radius: 9999px;
+    background: #fff; color: #1E293B; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(15,23,42,.35);
+  }
+
+  .cta-shadow { box-shadow: 0 8px 24px rgba(217,119,6,.35); }
+
+  /* Header: degradê translúcido sobre o hero, com sombra suave */
+  #header {
+    background: linear-gradient(180deg, rgba(15,23,42,.88) 0%, rgba(15,23,42,.45) 62%, rgba(15,23,42,0) 100%);
+    box-shadow: 0 6px 28px rgba(15,23,42,.22);
+    transition: background .3s ease, box-shadow .3s ease, backdrop-filter .3s ease;
+  }
+  /* Ao rolar, vira barra grafite sólida para manter contraste nas seções claras */
+  #header.scrolled {
+    background: rgba(15,23,42,.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 24px rgba(15,23,42,.4);
+  }
+
+  /* Foco visível */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid #D97706; outline-offset: 2px;
+  }
+</style>
+</head>
+<body class="bg-white text-ink antialiased">
+
+<!-- ============ HEADER ============ -->
+<header id="header" class="fixed top-0 inset-x-0 z-50">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 h-[72px] flex items-center justify-between gap-4">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2.5 shrink-0">
+      <span class="w-10 h-10 rounded-lg bg-white text-graphite grid place-items-center font-black text-lg tracking-tight">RB</span>
+      <span class="leading-tight">
+        <span class="block font-extrabold text-white text-[15px] tracking-tight">RB SOLUTIONS</span>
+        <span class="block text-[11px] text-slate-300 font-medium tracking-widest uppercase">Construtora</span>
+      </span>
+    </a>
+
+    <!-- Menu desktop -->
+    <nav class="hidden lg:flex items-center gap-8 text-[15px] font-medium text-white/90">
+      <div class="relative group">
+        <button class="flex items-center gap-1.5 py-6 hover:text-amber transition-colors">
+          Serviços <i class="fa-solid fa-chevron-down text-[10px] mt-0.5"></i>
+        </button>
+        <div class="absolute left-1/2 -translate-x-1/2 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+          <div class="bg-white rounded-xl shadow-xl border border-slate-100 py-2 w-64">
+            <a href="#servicos" class="flex items-center gap-3 px-4 py-2.5 hover:bg-cloud"><i class="fa-solid fa-house w-4 text-amber"></i> Residencial</a>
+            <a href="#servicos" class="flex items-center gap-3 px-4 py-2.5 hover:bg-cloud"><i class="fa-solid fa-briefcase w-4 text-amber"></i> Comercial</a>
+            <a href="#servicos" class="flex items-center gap-3 px-4 py-2.5 hover:bg-cloud"><i class="fa-solid fa-industry w-4 text-amber"></i> Industrial</a>
+            <a href="#servicos" class="flex items-center gap-3 px-4 py-2.5 hover:bg-cloud"><i class="fa-solid fa-blinds w-4 text-amber"></i> Persianas e Cortinas</a>
+          </div>
+        </div>
+      </div>
+      <a href="#projetos" class="py-6 hover:text-amber transition-colors">Projetos</a>
+      <a href="#sobre" class="py-6 hover:text-amber transition-colors">Sobre a RB</a>
+      <a href="#contato" class="py-6 hover:text-amber transition-colors">Contato</a>
+    </nav>
+
+    <!-- Conversores -->
+    <div class="flex items-center gap-3">
+      <a href="tel:+551146121867" class="hidden xl:flex items-center gap-2 text-white font-semibold text-[15px] hover:text-amber transition-colors">
+        <i class="fa-solid fa-phone text-amber"></i> (11) 4612-1867
+      </a>
+      <a href="#contato" class="bg-amber hover:bg-amber-dark text-white font-bold text-sm px-4 sm:px-5 py-2.5 rounded-lg transition-colors whitespace-nowrap cta-shadow">
+        Solicitar orçamento
+      </a>
+      <button id="hamb" class="lg:hidden w-10 h-10 grid place-items-center text-white" aria-label="Abrir menu">
+        <i class="fa-solid fa-bars text-xl"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu mobile -->
+  <div id="mobileMenu" class="lg:hidden hidden bg-graphite-dark/95 backdrop-blur border-t border-white/10 px-5 pb-5">
+    <a href="#servicos" class="block py-3.5 border-b border-white/10 font-medium text-white">Serviços</a>
+    <a href="#projetos" class="block py-3.5 border-b border-white/10 font-medium text-white">Projetos</a>
+    <a href="#sobre" class="block py-3.5 border-b border-white/10 font-medium text-white">Sobre a RB</a>
+    <a href="#contato" class="block py-3.5 border-b border-white/10 font-medium text-white">Contato</a>
+    <a href="tel:+551146121867" class="flex items-center gap-2 py-3.5 font-semibold text-white"><i class="fa-solid fa-phone text-amber"></i> (11) 4612-1867</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero-bg pt-[72px]">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 py-24 lg:py-36 relative">
+    <div class="max-w-2xl hero-text">
+      <p class="text-amber font-bold text-sm tracking-[0.2em] uppercase mb-5">Reformas e construções em São Paulo</p>
+      <h1 class="text-white font-extrabold tracking-tight leading-[1.05] text-4xl sm:text-5xl lg:text-6xl">
+        Sua reforma entregue <span class="text-amber">no prazo</span>, do projeto ao acabamento.
+      </h1>
+      <p class="text-slate-300 text-lg lg:text-xl mt-6 leading-relaxed max-w-xl">
+        Há mais de 10 anos executando reformas residenciais, comerciais e industriais, com projeto próprio, equipe fixa e cronograma transparente.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 mt-9">
+        <a href="#contato" class="cta-shadow bg-amber hover:bg-amber-dark text-white font-bold text-base px-8 py-4 rounded-lg text-center transition-colors">
+          Solicitar orçamento gratuito
+        </a>
+        <a href="#projetos" class="border border-white/30 hover:border-white text-white font-semibold text-base px-8 py-4 rounded-lg text-center transition-colors">
+          Ver projetos entregues
+        </a>
+      </div>
+      <div class="flex flex-wrap gap-x-6 gap-y-2 mt-8 text-slate-300 text-sm">
+        <span class="flex items-center gap-2"><i class="fa-solid fa-check text-amber"></i> Orçamento em até 48h</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-check text-amber"></i> Contrato com prazo garantido</span>
+        <span class="flex items-center gap-2"><i class="fa-solid fa-check text-amber"></i> +250 obras entregues</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NÚMEROS ============ -->
+<section class="bg-graphite-dark border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 py-12 lg:py-14 grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 text-center reveal">
+    <div>
+      <p class="text-white font-extrabold text-4xl lg:text-5xl tracking-tight"><span data-count="10">0</span>+</p>
+      <p class="text-slate-400 text-sm mt-2 font-medium">anos de mercado</p>
+    </div>
+    <div>
+      <p class="text-white font-extrabold text-4xl lg:text-5xl tracking-tight"><span data-count="250">0</span>+</p>
+      <p class="text-slate-400 text-sm mt-2 font-medium">obras entregues</p>
+    </div>
+    <div>
+      <p class="text-white font-extrabold text-4xl lg:text-5xl tracking-tight"><span data-count="38">0</span> mil</p>
+      <p class="text-slate-400 text-sm mt-2 font-medium">m² reformados</p>
+    </div>
+    <div>
+      <p class="text-amber font-extrabold text-4xl lg:text-5xl tracking-tight">100%</p>
+      <p class="text-slate-400 text-sm mt-2 font-medium">das obras com contrato e cronograma</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVIÇOS ============ -->
+<section id="servicos" class="py-24 lg:py-28">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="max-w-2xl reveal">
+      <p class="text-amber font-bold text-sm tracking-[0.2em] uppercase mb-3">O que fazemos</p>
+      <h2 class="text-graphite font-extrabold tracking-tight text-3xl lg:text-4xl">Um parceiro para <span class="text-amber">cada tipo de obra</span></h2>
+      <p class="text-muted mt-4 text-lg">Da reforma do seu apartamento à adequação do seu galpão industrial — mesmo padrão de engenharia, mesma equipe própria.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 mt-12">
+      <!-- Card Residencial -->
+      <article class="group rounded-2xl overflow-hidden border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-shadow reveal">
+        <div class="photo-ph h-52 grid place-items-center">
+          <span class="text-white/50 text-xs font-medium flex items-center gap-2"><i class="fa-solid fa-camera"></i> Foto real: reforma residencial</span>
+        </div>
+        <div class="p-6">
+          <div class="w-11 h-11 rounded-lg bg-amber/10 text-amber grid place-items-center text-lg mb-4"><i class="fa-solid fa-house"></i></div>
+          <h3 class="font-bold text-graphite text-xl">Residencial</h3>
+          <p class="text-muted mt-2 leading-relaxed">Reformas completas de casas e apartamentos: pisos, marcenaria, gesso, pintura e acabamentos.</p>
+          <a href="#contato" class="inline-flex items-center gap-2 text-amber font-bold mt-5 group-hover:gap-3 transition-all">Ver detalhes <i class="fa-solid fa-arrow-right text-sm"></i></a>
+        </div>
+      </article>
+
+      <!-- Card Comercial -->
+      <article class="group rounded-2xl overflow-hidden border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-shadow reveal">
+        <div class="photo-ph h-52 grid place-items-center">
+          <span class="text-white/50 text-xs font-medium flex items-center gap-2"><i class="fa-solid fa-camera"></i> Foto real: obra comercial</span>
+        </div>
+        <div class="p-6">
+          <div class="w-11 h-11 rounded-lg bg-amber/10 text-amber grid place-items-center text-lg mb-4"><i class="fa-solid fa-briefcase"></i></div>
+          <h3 class="font-bold text-graphite text-xl">Comercial</h3>
+          <p class="text-muted mt-2 leading-relaxed">Escritórios, lojas e clínicas — com execução fora do horário comercial para não parar seu negócio.</p>
+          <a href="#contato" class="inline-flex items-center gap-2 text-amber font-bold mt-5 group-hover:gap-3 transition-all">Ver detalhes <i class="fa-solid fa-arrow-right text-sm"></i></a>
+        </div>
+      </article>
+
+      <!-- Card Industrial -->
+      <article class="group rounded-2xl overflow-hidden border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-shadow reveal">
+        <div class="photo-ph h-52 grid place-items-center">
+          <span class="text-white/50 text-xs font-medium flex items-center gap-2"><i class="fa-solid fa-camera"></i> Foto real: obra industrial</span>
+        </div>
+        <div class="p-6">
+          <div class="w-11 h-11 rounded-lg bg-amber/10 text-amber grid place-items-center text-lg mb-4"><i class="fa-solid fa-industry"></i></div>
+          <h3 class="font-bold text-graphite text-xl">Industrial</h3>
+          <p class="text-muted mt-2 leading-relaxed">Divisórias, forros, instalações elétricas e de rede, e adequações de galpões e plantas fabris.</p>
+          <a href="#contato" class="inline-flex items-center gap-2 text-amber font-bold mt-5 group-hover:gap-3 transition-all">Ver detalhes <i class="fa-solid fa-arrow-right text-sm"></i></a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Serviços específicos -->
+    <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 reveal">
+      <div class="flex items-center gap-2.5 bg-cloud rounded-xl px-4 py-3.5 text-sm font-semibold text-graphite"><i class="fa-solid fa-blinds text-amber"></i> Persianas e cortinas</div>
+      <div class="flex items-center gap-2.5 bg-cloud rounded-xl px-4 py-3.5 text-sm font-semibold text-graphite"><i class="fa-solid fa-layer-group text-amber"></i> Pisos</div>
+      <div class="flex items-center gap-2.5 bg-cloud rounded-xl px-4 py-3.5 text-sm font-semibold text-graphite"><i class="fa-solid fa-border-all text-amber"></i> Drywall e gesso</div>
+      <div class="flex items-center gap-2.5 bg-cloud rounded-xl px-4 py-3.5 text-sm font-semibold text-graphite"><i class="fa-solid fa-paint-roller text-amber"></i> Pintura</div>
+      <div class="flex items-center gap-2.5 bg-cloud rounded-xl px-4 py-3.5 text-sm font-semibold text-graphite"><i class="fa-solid fa-screwdriver-wrench text-amber"></i> Marcenaria</div>
+      <div class="flex items-center gap-2.5 bg-cloud rounded-xl px-4 py-3.5 text-sm font-semibold text-graphite"><i class="fa-solid fa-bolt text-amber"></i> Elétrica e rede</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJETOS ============ -->
+<section id="projetos" class="py-24 lg:py-28 bg-cloud">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 reveal">
+      <div class="max-w-2xl">
+        <p class="text-amber font-bold text-sm tracking-[0.2em] uppercase mb-3">Projetos entregues</p>
+        <h2 class="text-graphite font-extrabold tracking-tight text-3xl lg:text-4xl">Obras reais, com <span class="text-amber">prazo e metragem</span> na etiqueta</h2>
+      </div>
+      <a href="#contato" class="text-graphite font-bold inline-flex items-center gap-2 hover:text-amber transition-colors shrink-0">Ver todos os projetos <i class="fa-solid fa-arrow-right text-sm"></i></a>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+
+      <!-- Card com slider antes/depois -->
+      <article class="rounded-2xl overflow-hidden bg-white shadow-sm border border-slate-100 reveal">
+        <div class="ba-wrap h-64 select-none" id="baSlider" aria-label="Comparação antes e depois da obra">
+          <div class="photo-ph--light w-full h-full grid place-items-center">
+            <span class="text-graphite/50 text-xs font-bold uppercase tracking-widest">Antes</span>
+          </div>
+          <div class="ba-after photo-ph grid place-items-center">
+            <span class="text-white/60 text-xs font-bold uppercase tracking-widest">Depois</span>
+          </div>
+          <div class="ba-handle" id="baHandle"></div>
+          <span class="absolute top-3 left-3 bg-graphite text-white text-[11px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wide">Residencial</span>
+          <span class="absolute top-3 right-3 bg-white/90 text-graphite text-[11px] font-bold px-2.5 py-1 rounded-md">← Arraste →</span>
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-graphite text-lg">Apartamento · Pinheiros</h3>
+          <div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-muted">
+            <span><i class="fa-solid fa-ruler-combined text-amber mr-1.5"></i>120 m²</span>
+            <span><i class="fa-regular fa-calendar-check text-amber mr-1.5"></i>45 dias</span>
+            <span><i class="fa-solid fa-list-check text-amber mr-1.5"></i>Reforma completa</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="rounded-2xl overflow-hidden bg-white shadow-sm border border-slate-100 group reveal">
+        <div class="photo-ph h-64 grid place-items-center relative">
+          <span class="text-white/50 text-xs font-medium flex items-center gap-2"><i class="fa-solid fa-camera"></i> Foto: escritório finalizado</span>
+          <span class="absolute top-3 left-3 bg-graphite text-white text-[11px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wide">Comercial</span>
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-graphite text-lg">Escritório · Faria Lima</h3>
+          <div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-muted">
+            <span><i class="fa-solid fa-ruler-combined text-amber mr-1.5"></i>340 m²</span>
+            <span><i class="fa-regular fa-calendar-check text-amber mr-1.5"></i>60 dias</span>
+            <span><i class="fa-solid fa-list-check text-amber mr-1.5"></i>Retrofit + mobiliário</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="rounded-2xl overflow-hidden bg-white shadow-sm border border-slate-100 group reveal">
+        <div class="photo-ph h-64 grid place-items-center relative">
+          <span class="text-white/50 text-xs font-medium flex items-center gap-2"><i class="fa-solid fa-camera"></i> Foto: galpão adequado</span>
+          <span class="absolute top-3 left-3 bg-graphite text-white text-[11px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wide">Industrial</span>
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-graphite text-lg">Galpão logístico · Cotia</h3>
+          <div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-muted">
+            <span><i class="fa-solid fa-ruler-combined text-amber mr-1.5"></i>1.800 m²</span>
+            <span><i class="fa-regular fa-calendar-check text-amber mr-1.5"></i>90 dias</span>
+            <span><i class="fa-solid fa-list-check text-amber mr-1.5"></i>Divisórias + elétrica</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section id="sobre" class="py-24 lg:py-28">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="max-w-2xl mx-auto text-center reveal">
+      <p class="text-amber font-bold text-sm tracking-[0.2em] uppercase mb-3">Como funciona</p>
+      <h2 class="text-graphite font-extrabold tracking-tight text-3xl lg:text-4xl">Obra sem surpresa tem <span class="text-amber">processo</span></h2>
+      <p class="text-muted mt-4 text-lg">Do primeiro contato à entrega das chaves, você sabe exatamente em que etapa a sua obra está.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-14 relative">
+      <div class="hidden lg:block absolute top-7 left-[12.5%] right-[12.5%] h-px bg-slate-200"></div>
+
+      <div class="relative text-center reveal">
+        <div class="w-14 h-14 mx-auto rounded-full bg-graphite text-white grid place-items-center text-xl relative z-10"><i class="fa-solid fa-house-circle-check"></i></div>
+        <h3 class="font-bold text-graphite mt-5">1. Visita técnica gratuita</h3>
+        <p class="text-muted text-sm mt-2 leading-relaxed">Nosso engenheiro visita o local, entende a necessidade e mede tudo — sem custo.</p>
+      </div>
+      <div class="relative text-center reveal">
+        <div class="w-14 h-14 mx-auto rounded-full bg-graphite text-white grid place-items-center text-xl relative z-10"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+        <h3 class="font-bold text-graphite mt-5">2. Orçamento em 48h</h3>
+        <p class="text-muted text-sm mt-2 leading-relaxed">Proposta detalhada por item, com materiais, mão de obra e prazo de cada etapa.</p>
+      </div>
+      <div class="relative text-center reveal">
+        <div class="w-14 h-14 mx-auto rounded-full bg-graphite text-white grid place-items-center text-xl relative z-10"><i class="fa-solid fa-file-signature"></i></div>
+        <h3 class="font-bold text-graphite mt-5">3. Contrato fechado</h3>
+        <p class="text-muted text-sm mt-2 leading-relaxed">Escopo, valor e data de entrega em contrato. O que foi combinado é o que será feito.</p>
+      </div>
+      <div class="relative text-center reveal">
+        <div class="w-14 h-14 mx-auto rounded-full bg-amber text-white grid place-items-center text-xl relative z-10"><i class="fa-solid fa-key"></i></div>
+        <h3 class="font-bold text-graphite mt-5">4. Execução e entrega</h3>
+        <p class="text-muted text-sm mt-2 leading-relaxed">Acompanhamento semanal com fotos, obra limpa e entrega no prazo combinado.</p>
+      </div>
+    </div>
+
+    <div class="text-center mt-12 reveal">
+      <a href="#contato" class="inline-block bg-amber hover:bg-amber-dark text-white font-bold px-8 py-4 rounded-lg cta-shadow transition-colors">Agendar visita técnica</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIFERENCIAIS ============ -->
+<section class="py-24 lg:py-28 bg-graphite">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-2 gap-14 items-center">
+    <div class="reveal">
+      <p class="text-amber font-bold text-sm tracking-[0.2em] uppercase mb-3">Por que a RB</p>
+      <h2 class="text-white font-extrabold tracking-tight text-3xl lg:text-4xl leading-tight">O que fazemos <span class="text-amber">diferente</span> das outras empreiteiras</h2>
+      <div class="mt-10 space-y-7">
+        <div class="flex gap-4">
+          <div class="w-11 h-11 shrink-0 rounded-lg bg-amber/15 text-amber grid place-items-center"><i class="fa-solid fa-helmet-safety"></i></div>
+          <div>
+            <h3 class="text-white font-bold">Equipe própria, não terceirizada</h3>
+            <p class="text-slate-400 text-sm mt-1 leading-relaxed">Profissionais fixos e treinados, com o mesmo padrão em todas as obras.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="w-11 h-11 shrink-0 rounded-lg bg-amber/15 text-amber grid place-items-center"><i class="fa-regular fa-calendar-check"></i></div>
+          <div>
+            <h3 class="text-white font-bold">Data de entrega em contrato</h3>
+            <p class="text-slate-400 text-sm mt-1 leading-relaxed">Cronograma assinado com prazo garantido para cada etapa da obra.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="w-11 h-11 shrink-0 rounded-lg bg-amber/15 text-amber grid place-items-center"><i class="fa-solid fa-blinds"></i></div>
+          <div>
+            <h3 class="text-white font-bold">Fábrica própria de persianas e cortinas</h3>
+            <p class="text-slate-400 text-sm mt-1 leading-relaxed">Fabricamos sob medida — preço de fábrica e instalação pela mesma equipe da obra.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="w-11 h-11 shrink-0 rounded-lg bg-amber/15 text-amber grid place-items-center"><i class="fa-solid fa-broom"></i></div>
+          <div>
+            <h3 class="text-white font-bold">Obra limpa e imóvel protegido</h3>
+            <p class="text-slate-400 text-sm mt-1 leading-relaxed">Proteção de pisos e móveis e limpeza diária ao fim de cada jornada.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="photo-ph rounded-2xl h-80 lg:h-[520px] grid place-items-center reveal">
+      <span class="text-white/50 text-xs font-medium flex items-center gap-2 text-center px-6"><i class="fa-solid fa-camera"></i> Foto: equipe RB uniformizada e com EPI em obra</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROVA SOCIAL ============ -->
+<section class="py-24 lg:py-28">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 reveal">
+      <div class="max-w-2xl">
+        <p class="text-amber font-bold text-sm tracking-[0.2em] uppercase mb-3">Quem contratou, recomenda</p>
+        <h2 class="text-graphite font-extrabold tracking-tight text-3xl lg:text-4xl">Depoimentos de <span class="text-amber">clientes reais</span></h2>
+      </div>
+      <a href="#" class="inline-flex items-center gap-3 bg-white border border-slate-200 rounded-xl px-5 py-3 shadow-sm shrink-0">
+        <i class="fa-brands fa-google text-xl"></i>
+        <span class="text-sm">
+          <span class="font-extrabold text-graphite">4,8</span>
+          <span class="text-amber ml-1"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span>
+          <span class="block text-muted">avaliações no Google</span>
+        </span>
+      </a>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 mt-12">
+      <figure class="bg-cloud rounded-2xl p-7 reveal">
+        <div class="text-amber mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <blockquote class="text-ink leading-relaxed">"Reforma de 45 dias entregue em 43. Recebi fotos toda semana e o valor final foi exatamente o do contrato."</blockquote>
+        <figcaption class="flex items-center gap-3 mt-6">
+          <span class="w-11 h-11 rounded-full bg-graphite text-white grid place-items-center font-bold">AC</span>
+          <span>
+            <span class="block font-bold text-graphite text-sm">Ana C.</span>
+            <span class="block text-muted text-xs">Reforma de apartamento · Cotia</span>
+          </span>
+        </figcaption>
+      </figure>
+      <figure class="bg-cloud rounded-2xl p-7 reveal">
+        <div class="text-amber mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <blockquote class="text-ink leading-relaxed">"Fizeram a obra do escritório à noite e nos fins de semana. Não paramos o atendimento um dia sequer."</blockquote>
+        <figcaption class="flex items-center gap-3 mt-6">
+          <span class="w-11 h-11 rounded-full bg-graphite text-white grid place-items-center font-bold">RM</span>
+          <span>
+            <span class="block font-bold text-graphite text-sm">Ricardo M.</span>
+            <span class="block text-muted text-xs">Retrofit de escritório · Pinheiros</span>
+          </span>
+        </figcaption>
+      </figure>
+      <figure class="bg-cloud rounded-2xl p-7 reveal">
+        <div class="text-amber mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+        <blockquote class="text-ink leading-relaxed">"Adequaram nosso galpão com laudo e ART. Profissionalismo que não encontramos em outras três empresas que cotamos."</blockquote>
+        <figcaption class="flex items-center gap-3 mt-6">
+          <span class="w-11 h-11 rounded-full bg-graphite text-white grid place-items-center font-bold">FL</span>
+          <span>
+            <span class="block font-bold text-graphite text-sm">Fernanda L.</span>
+            <span class="block text-muted text-xs">Obra industrial · Barueri</span>
+          </span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTAGRAM ============ -->
+<section class="py-24 lg:py-28 bg-cloud">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8">
+    <div class="flex items-center justify-between gap-4 reveal">
+      <h2 class="text-graphite font-extrabold tracking-tight text-2xl lg:text-3xl">Acompanhe nossas obras <span class="text-amber">em tempo real</span></h2>
+      <a href="#" class="inline-flex items-center gap-2 font-bold text-graphite hover:text-amber transition-colors shrink-0"><i class="fa-brands fa-instagram text-xl"></i> @rbsolutions</a>
+    </div>
+    <div class="grid grid-cols-3 lg:grid-cols-6 gap-3 mt-8 reveal">
+      <div class="photo-ph aspect-square rounded-xl grid place-items-center"><i class="fa-brands fa-instagram text-white/40 text-xl"></i></div>
+      <div class="photo-ph--warm aspect-square rounded-xl grid place-items-center"><i class="fa-brands fa-instagram text-white/60 text-xl"></i></div>
+      <div class="photo-ph aspect-square rounded-xl grid place-items-center"><i class="fa-brands fa-instagram text-white/40 text-xl"></i></div>
+      <div class="photo-ph aspect-square rounded-xl grid place-items-center"><i class="fa-brands fa-instagram text-white/40 text-xl"></i></div>
+      <div class="photo-ph--warm aspect-square rounded-xl grid place-items-center"><i class="fa-brands fa-instagram text-white/60 text-xl"></i></div>
+      <div class="photo-ph aspect-square rounded-xl grid place-items-center"><i class="fa-brands fa-instagram text-white/40 text-xl"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section id="contato" class="bg-graphite-dark py-20 lg:py-24">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+    <div class="reveal">
+      <h2 class="text-white font-extrabold tracking-tight text-3xl lg:text-4xl leading-tight">Pronto para começar sua obra?</h2>
+      <p class="text-slate-400 text-lg mt-4">Receba um orçamento detalhado, sem compromisso, em até 48 horas após a visita técnica.</p>
+      <div class="flex flex-col sm:flex-row gap-4 mt-8">
+        <a href="https://wa.me/5511994515520?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento." class="inline-flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1fb457] text-white font-bold px-7 py-4 rounded-lg transition-colors">
+          <i class="fa-brands fa-whatsapp text-xl"></i> Chamar no WhatsApp
+        </a>
+        <a href="tel:+551146121867" class="inline-flex items-center justify-center gap-2.5 border border-white/20 hover:border-white text-white font-semibold px-7 py-4 rounded-lg transition-colors">
+          <i class="fa-solid fa-phone"></i> (11) 4612-1867
+        </a>
+      </div>
+    </div>
+
+    <!-- Formulário curto -->
+    <div class="bg-white rounded-2xl p-7 lg:p-8 shadow-2xl reveal">
+      <h3 class="font-extrabold text-graphite text-xl">Peça seu orçamento</h3>
+      <p class="text-muted text-sm mt-1">Preencha e retornamos em horário comercial.</p>
+      <div class="grid sm:grid-cols-2 gap-4 mt-6">
+        <label class="block sm:col-span-1">
+          <span class="text-xs font-bold text-graphite uppercase tracking-wide">Nome</span>
+          <input type="text" placeholder="Seu nome" class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-3 text-sm focus:border-amber outline-none">
+        </label>
+        <label class="block sm:col-span-1">
+          <span class="text-xs font-bold text-graphite uppercase tracking-wide">WhatsApp</span>
+          <input type="tel" placeholder="(11) 90000-0000" class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-3 text-sm focus:border-amber outline-none">
+        </label>
+        <label class="block sm:col-span-1">
+          <span class="text-xs font-bold text-graphite uppercase tracking-wide">Tipo de obra</span>
+          <select class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-3 text-sm bg-white focus:border-amber outline-none text-ink">
+            <option>Residencial</option>
+            <option>Comercial</option>
+            <option>Industrial</option>
+            <option>Persianas e cortinas</option>
+          </select>
+        </label>
+        <label class="block sm:col-span-1">
+          <span class="text-xs font-bold text-graphite uppercase tracking-wide">Cidade</span>
+          <input type="text" placeholder="Ex.: Cotia" class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-3 text-sm focus:border-amber outline-none">
+        </label>
+      </div>
+      <button onclick="alert('Protótipo: aqui o lead seria enviado ao WhatsApp/CRM da RB.')" class="w-full mt-6 bg-amber hover:bg-amber-dark text-white font-bold py-4 rounded-lg cta-shadow transition-colors">
+        Solicitar orçamento gratuito
+      </button>
+      <p class="text-[11px] text-muted mt-3 text-center"><i class="fa-solid fa-lock mr-1"></i> Seus dados são usados apenas para o contato do orçamento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-graphite-dark border-t border-white/10 pt-14 pb-8">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <div class="flex items-center gap-2.5">
+        <span class="w-10 h-10 rounded-lg bg-white text-graphite grid place-items-center font-black text-lg">RB</span>
+        <span class="leading-tight">
+          <span class="block font-extrabold text-white text-[15px]">RB SOLUTIONS</span>
+          <span class="block text-[11px] text-slate-500 font-medium tracking-widest uppercase">Construtora</span>
+        </span>
+      </div>
+      <p class="text-slate-500 text-sm mt-4 leading-relaxed">Reformas e construções residenciais, comerciais e industriais na Grande São Paulo.</p>
+      <div class="flex gap-3 mt-5">
+        <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-amber text-slate-300 hover:text-white grid place-items-center transition-colors"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-amber text-slate-300 hover:text-white grid place-items-center transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-amber text-slate-300 hover:text-white grid place-items-center transition-colors"><i class="fa-brands fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div>
+      <h3 class="text-white font-bold text-sm uppercase tracking-wider">Navegação</h3>
+      <ul class="mt-4 space-y-2.5 text-sm text-slate-400">
+        <li><a href="#servicos" class="hover:text-amber transition-colors">Serviços</a></li>
+        <li><a href="#projetos" class="hover:text-amber transition-colors">Projetos</a></li>
+        <li><a href="#sobre" class="hover:text-amber transition-colors">Sobre a RB</a></li>
+        <li><a href="#contato" class="hover:text-amber transition-colors">Contato</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-white font-bold text-sm uppercase tracking-wider">Contato</h3>
+      <ul class="mt-4 space-y-2.5 text-sm text-slate-400">
+        <li class="flex gap-2.5"><i class="fa-solid fa-location-dot text-amber mt-0.5"></i> Cotia · São Paulo/SP</li>
+        <li class="flex gap-2.5"><i class="fa-solid fa-phone text-amber mt-0.5"></i> (11) 4612-1867</li>
+        <li class="flex gap-2.5"><i class="fa-brands fa-whatsapp text-amber mt-0.5"></i> (11) 99451-5520</li>
+        <li class="flex gap-2.5"><i class="fa-regular fa-clock text-amber mt-0.5"></i> Seg–Sex, 8h às 18h</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-white font-bold text-sm uppercase tracking-wider">Institucional</h3>
+      <ul class="mt-4 space-y-2.5 text-sm text-slate-400">
+        <li>RB Solutions Construtora LTDA</li>
+        <li>CNPJ 00.000.000/0001-00</li>
+        <li><a href="#" class="hover:text-amber transition-colors">Política de privacidade</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 mt-12 pt-6 border-t border-white/10 text-center text-xs text-slate-600">
+    © 2026 RB Solutions Construtora LTDA. Todos os direitos reservados.
+  </div>
+</footer>
+
+<!-- WhatsApp flutuante -->
+<a href="https://wa.me/5511994515520?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento."
+   class="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white grid place-items-center text-2xl shadow-xl hover:scale-105 transition-transform"
+   aria-label="Falar no WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script>
+// Header com sombra ao rolar
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 120);
+});
+
+// Menu mobile
+const hamb = document.getElementById('hamb');
+const mobileMenu = document.getElementById('mobileMenu');
+hamb.addEventListener('click', () => {
+  mobileMenu.classList.toggle('hidden');
+  hamb.firstElementChild.classList.toggle('fa-bars');
+  hamb.firstElementChild.classList.toggle('fa-xmark');
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mobileMenu.classList.add('hidden');
+  hamb.firstElementChild.classList.add('fa-bars');
+  hamb.firstElementChild.classList.remove('fa-xmark');
+}));
+
+// Reveal ao rolar
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduceMotion) {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+} else {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+}
+
+// Contadores da faixa de números
+const counters = document.querySelectorAll('[data-count]');
+const ioNum = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    ioNum.unobserve(e.target);
+    const target = +e.target.dataset.count;
+    if (reduceMotion) { e.target.textContent = target; return; }
+    const start = performance.now(), dur = 1200;
+    const tick = now => {
+      const p = Math.min((now - start) / dur, 1);
+      e.target.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+}, { threshold: 0.5 });
+counters.forEach(c => ioNum.observe(c));
+
+// Slider antes/depois
+const ba = document.getElementById('baSlider');
+const baAfter = ba.querySelector('.ba-after');
+const baHandle = document.getElementById('baHandle');
+function setBA(clientX) {
+  const r = ba.getBoundingClientRect();
+  const pct = Math.max(0, Math.min(100, ((clientX - r.left) / r.width) * 100));
+  baAfter.style.clipPath = `inset(0 0 0 ${pct}%)`;
+  baHandle.style.left = pct + '%';
+}
+let dragging = false;
+ba.addEventListener('pointerdown', e => { dragging = true; ba.setPointerCapture(e.pointerId); setBA(e.clientX); });
+ba.addEventListener('pointermove', e => { if (dragging) setBA(e.clientX); });
+ba.addEventListener('pointerup', () => dragging = false);
+ba.addEventListener('pointercancel', () => dragging = false);
+</script>
+</body>
+</html>
