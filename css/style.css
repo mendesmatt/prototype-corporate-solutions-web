@@ -1,0 +1,65 @@
+html { scroll-behavior: smooth; }
+body { font-family: 'Archivo', sans-serif; }
+
+.photo-ph {
+  background-color: #263449;
+  background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.045) 0, rgba(255,255,255,.045) 1px, transparent 1px, transparent 14px);
+  position: relative;
+}
+.photo-ph--light {
+  background-color: #E7E5E4;
+  background-image: repeating-linear-gradient(45deg, rgba(30,41,59,.06) 0, rgba(30,41,59,.06) 1px, transparent 1px, transparent 14px);
+}
+.photo-ph--warm {
+  background: linear-gradient(135deg, #D97706 0%, #92400E 100%);
+}
+
+.hero-bg {
+  background:
+    linear-gradient(180deg, rgba(15,23,42,.72) 0%, rgba(15,23,42,.25) 14%, rgba(15,23,42,0) 30%),
+    linear-gradient(95deg, rgba(15,23,42,.97) 0%, rgba(15,23,42,.88) 34%, rgba(15,23,42,.58) 56%, rgba(15,23,42,.16) 82%, rgba(15,23,42,.05) 100%),
+    url('banner-rb.png') right center / cover no-repeat,
+    #1E293B;
+}
+.hero-text { text-shadow: 0 2px 28px rgba(15,23,42,.65), 0 1px 4px rgba(15,23,42,.5); }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+.ba-wrap { position: relative; overflow: hidden; touch-action: none; cursor: ew-resize; }
+.ba-after { position: absolute; inset: 0; clip-path: inset(0 0 0 50%); }
+.ba-handle {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
+  background: #fff; transform: translateX(-1px); pointer-events: none;
+}
+.ba-handle::after {
+  content: '\2194'; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 40px; height: 40px; border-radius: 9999px;
+  background: #fff; color: #1E293B; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(15,23,42,.35);
+}
+
+.cta-shadow { box-shadow: 0 8px 24px rgba(217,119,6,.35); }
+
+#header {
+  background: linear-gradient(180deg, rgba(15,23,42,.88) 0%, rgba(15,23,42,.45) 62%, rgba(15,23,42,0) 100%);
+  box-shadow: 0 6px 28px rgba(15,23,42,.22);
+  transition: background .3s ease, box-shadow .3s ease, backdrop-filter .3s ease;
+}
+
+#header.scrolled {
+  background: rgba(15,23,42,.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(15,23,42,.4);
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid #D97706; outline-offset: 2px;
+}

@@ -8,103 +8,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        graphite: '#1E293B',
-        'graphite-dark': '#0F172A',
-        amber: { DEFAULT: '#D97706', dark: '#B45309' },
-        ink: '#334155',
-        muted: '#64748B',
-        cloud: '#F5F5F4'
-      },
-      fontFamily: { sans: ['Archivo', 'sans-serif'] }
-    }
-  }
-}
-</script>
-<style>
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Archivo', sans-serif; }
-
-  /* Placeholder de foto: padrão diagonal estilo planta baixa */
-  .photo-ph {
-    background-color: #263449;
-    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.045) 0, rgba(255,255,255,.045) 1px, transparent 1px, transparent 14px);
-    position: relative;
-  }
-  .photo-ph--light {
-    background-color: #E7E5E4;
-    background-image: repeating-linear-gradient(45deg, rgba(30,41,59,.06) 0, rgba(30,41,59,.06) 1px, transparent 1px, transparent 14px);
-  }
-  .photo-ph--warm {
-    background: linear-gradient(135deg, #D97706 0%, #92400E 100%);
-  }
-
-  /* Hero com foto + degradês de legibilidade (texto à esquerda, header no topo) */
-  .hero-bg {
-    background:
-      linear-gradient(180deg, rgba(15,23,42,.72) 0%, rgba(15,23,42,.25) 14%, rgba(15,23,42,0) 30%),
-      linear-gradient(95deg, rgba(15,23,42,.97) 0%, rgba(15,23,42,.88) 34%, rgba(15,23,42,.58) 56%, rgba(15,23,42,.16) 82%, rgba(15,23,42,.05) 100%),
-      url('banner-rb.png') right center / cover no-repeat,
-      #1E293B;
-  }
-  .hero-text { text-shadow: 0 2px 28px rgba(15,23,42,.65), 0 1px 4px rgba(15,23,42,.5); }
-
-  /* Fade-up ao rolar */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
-  .reveal.in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
-    html { scroll-behavior: auto; }
-  }
-
-  /* Slider antes/depois */
-  .ba-wrap { position: relative; overflow: hidden; touch-action: none; cursor: ew-resize; }
-  .ba-after { position: absolute; inset: 0; clip-path: inset(0 0 0 50%); }
-  .ba-handle {
-    position: absolute; top: 0; bottom: 0; left: 50%; width: 2px;
-    background: #fff; transform: translateX(-1px); pointer-events: none;
-  }
-  .ba-handle::after {
-    content: '\2194'; position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
-    width: 40px; height: 40px; border-radius: 9999px;
-    background: #fff; color: #1E293B; font-size: 16px;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 14px rgba(15,23,42,.35);
-  }
-
-  .cta-shadow { box-shadow: 0 8px 24px rgba(217,119,6,.35); }
-
-  /* Header: degradê translúcido sobre o hero, com sombra suave */
-  #header {
-    background: linear-gradient(180deg, rgba(15,23,42,.88) 0%, rgba(15,23,42,.45) 62%, rgba(15,23,42,0) 100%);
-    box-shadow: 0 6px 28px rgba(15,23,42,.22);
-    transition: background .3s ease, box-shadow .3s ease, backdrop-filter .3s ease;
-  }
-  /* Ao rolar, vira barra grafite sólida para manter contraste nas seções claras */
-  #header.scrolled {
-    background: rgba(15,23,42,.94);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 24px rgba(15,23,42,.4);
-  }
-
-  /* Foco visível */
-  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
-    outline: 2px solid #D97706; outline-offset: 2px;
-  }
-</style>
+<script src="js/tailwind.config.js"></script>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-white text-ink antialiased">
 
-<!-- ============ HEADER ============ -->
 <header id="header" class="fixed top-0 inset-x-0 z-50">
   <div class="max-w-7xl mx-auto px-5 lg:px-8 h-[72px] flex items-center justify-between gap-4">
-    <!-- Logo -->
     <a href="#" class="flex items-center gap-2.5 shrink-0">
       <span class="w-10 h-10 rounded-lg bg-white text-graphite grid place-items-center font-black text-lg tracking-tight">RB</span>
       <span class="leading-tight">
@@ -113,7 +23,6 @@ tailwind.config = {
       </span>
     </a>
 
-    <!-- Menu desktop -->
     <nav class="hidden lg:flex items-center gap-8 text-[15px] font-medium text-white/90">
       <div class="relative group">
         <button class="flex items-center gap-1.5 py-6 hover:text-amber transition-colors">
@@ -133,7 +42,6 @@ tailwind.config = {
       <a href="#contato" class="py-6 hover:text-amber transition-colors">Contato</a>
     </nav>
 
-    <!-- Conversores -->
     <div class="flex items-center gap-3">
       <a href="tel:+551146121867" class="hidden xl:flex items-center gap-2 text-white font-semibold text-[15px] hover:text-amber transition-colors">
         <i class="fa-solid fa-phone text-amber"></i> (11) 4612-1867
@@ -147,7 +55,6 @@ tailwind.config = {
     </div>
   </div>
 
-  <!-- Menu mobile -->
   <div id="mobileMenu" class="lg:hidden hidden bg-graphite-dark/95 backdrop-blur border-t border-white/10 px-5 pb-5">
     <a href="#servicos" class="block py-3.5 border-b border-white/10 font-medium text-white">Serviços</a>
     <a href="#projetos" class="block py-3.5 border-b border-white/10 font-medium text-white">Projetos</a>
@@ -157,7 +64,6 @@ tailwind.config = {
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
 <section class="hero-bg pt-[72px]">
   <div class="max-w-7xl mx-auto px-5 lg:px-8 py-24 lg:py-36 relative">
     <div class="max-w-2xl hero-text">
@@ -185,7 +91,6 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ NÚMEROS ============ -->
 <section class="bg-graphite-dark border-t border-white/5">
   <div class="max-w-7xl mx-auto px-5 lg:px-8 py-12 lg:py-14 grid grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 text-center reveal">
     <div>
@@ -207,7 +112,6 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ SERVIÇOS ============ -->
 <section id="servicos" class="py-24 lg:py-28">
   <div class="max-w-7xl mx-auto px-5 lg:px-8">
     <div class="max-w-2xl reveal">
@@ -217,7 +121,6 @@ tailwind.config = {
     </div>
 
     <div class="grid md:grid-cols-3 gap-6 mt-12">
-      <!-- Card Residencial -->
       <article class="group rounded-2xl overflow-hidden border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-shadow reveal">
         <div class="photo-ph h-52 grid place-items-center">
           <span class="text-white/50 text-xs font-medium flex items-center gap-2"><i class="fa-solid fa-camera"></i> Foto real: reforma residencial</span>
@@ -230,7 +133,6 @@ tailwind.config = {
         </div>
       </article>
 
-      <!-- Card Comercial -->
       <article class="group rounded-2xl overflow-hidden border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-shadow reveal">
         <div class="photo-ph h-52 grid place-items-center">
           <span class="text-white/50 text-xs font-medium flex items-center gap-2"><i class="fa-solid fa-camera"></i> Foto real: obra comercial</span>
@@ -243,7 +145,6 @@ tailwind.config = {
         </div>
       </article>
 
-      <!-- Card Industrial -->
       <article class="group rounded-2xl overflow-hidden border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-shadow reveal">
         <div class="photo-ph h-52 grid place-items-center">
           <span class="text-white/50 text-xs font-medium flex items-center gap-2"><i class="fa-solid fa-camera"></i> Foto real: obra industrial</span>
@@ -257,7 +158,6 @@ tailwind.config = {
       </article>
     </div>
 
-    <!-- Serviços específicos -->
     <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 reveal">
       <div class="flex items-center gap-2.5 bg-cloud rounded-xl px-4 py-3.5 text-sm font-semibold text-graphite"><i class="fa-solid fa-blinds text-amber"></i> Persianas e cortinas</div>
       <div class="flex items-center gap-2.5 bg-cloud rounded-xl px-4 py-3.5 text-sm font-semibold text-graphite"><i class="fa-solid fa-layer-group text-amber"></i> Pisos</div>
@@ -269,7 +169,6 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ PROJETOS ============ -->
 <section id="projetos" class="py-24 lg:py-28 bg-cloud">
   <div class="max-w-7xl mx-auto px-5 lg:px-8">
     <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 reveal">
@@ -282,7 +181,6 @@ tailwind.config = {
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
 
-      <!-- Card com slider antes/depois -->
       <article class="rounded-2xl overflow-hidden bg-white shadow-sm border border-slate-100 reveal">
         <div class="ba-wrap h-64 select-none" id="baSlider" aria-label="Comparação antes e depois da obra">
           <div class="photo-ph--light w-full h-full grid place-items-center">
@@ -305,7 +203,6 @@ tailwind.config = {
         </div>
       </article>
 
-      <!-- Card 2 -->
       <article class="rounded-2xl overflow-hidden bg-white shadow-sm border border-slate-100 group reveal">
         <div class="photo-ph h-64 grid place-items-center relative">
           <span class="text-white/50 text-xs font-medium flex items-center gap-2"><i class="fa-solid fa-camera"></i> Foto: escritório finalizado</span>
@@ -321,7 +218,6 @@ tailwind.config = {
         </div>
       </article>
 
-      <!-- Card 3 -->
       <article class="rounded-2xl overflow-hidden bg-white shadow-sm border border-slate-100 group reveal">
         <div class="photo-ph h-64 grid place-items-center relative">
           <span class="text-white/50 text-xs font-medium flex items-center gap-2"><i class="fa-solid fa-camera"></i> Foto: galpão adequado</span>
@@ -340,7 +236,6 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ COMO FUNCIONA ============ -->
 <section id="sobre" class="py-24 lg:py-28">
   <div class="max-w-7xl mx-auto px-5 lg:px-8">
     <div class="max-w-2xl mx-auto text-center reveal">
@@ -380,7 +275,6 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ DIFERENCIAIS ============ -->
 <section class="py-24 lg:py-28 bg-graphite">
   <div class="max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-2 gap-14 items-center">
     <div class="reveal">
@@ -423,7 +317,6 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ PROVA SOCIAL ============ -->
 <section class="py-24 lg:py-28">
   <div class="max-w-7xl mx-auto px-5 lg:px-8">
     <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 reveal">
@@ -479,7 +372,6 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ INSTAGRAM ============ -->
 <section class="py-24 lg:py-28 bg-cloud">
   <div class="max-w-7xl mx-auto px-5 lg:px-8">
     <div class="flex items-center justify-between gap-4 reveal">
@@ -497,7 +389,6 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ CTA FINAL ============ -->
 <section id="contato" class="bg-graphite-dark py-20 lg:py-24">
   <div class="max-w-7xl mx-auto px-5 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
     <div class="reveal">
@@ -513,7 +404,6 @@ tailwind.config = {
       </div>
     </div>
 
-    <!-- Formulário curto -->
     <div class="bg-white rounded-2xl p-7 lg:p-8 shadow-2xl reveal">
       <h3 class="font-extrabold text-graphite text-xl">Peça seu orçamento</h3>
       <p class="text-muted text-sm mt-1">Preencha e retornamos em horário comercial.</p>
@@ -548,7 +438,6 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ FOOTER ============ -->
 <footer class="bg-graphite-dark border-t border-white/10 pt-14 pb-8">
   <div class="max-w-7xl mx-auto px-5 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
     <div>
@@ -598,79 +487,12 @@ tailwind.config = {
   </div>
 </footer>
 
-<!-- WhatsApp flutuante -->
 <a href="https://wa.me/5511994515520?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento."
    class="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white grid place-items-center text-2xl shadow-xl hover:scale-105 transition-transform"
    aria-label="Falar no WhatsApp">
   <i class="fa-brands fa-whatsapp"></i>
 </a>
 
-<script>
-// Header com sombra ao rolar
-const header = document.getElementById('header');
-window.addEventListener('scroll', () => {
-  header.classList.toggle('scrolled', window.scrollY > 120);
-});
-
-// Menu mobile
-const hamb = document.getElementById('hamb');
-const mobileMenu = document.getElementById('mobileMenu');
-hamb.addEventListener('click', () => {
-  mobileMenu.classList.toggle('hidden');
-  hamb.firstElementChild.classList.toggle('fa-bars');
-  hamb.firstElementChild.classList.toggle('fa-xmark');
-});
-mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  mobileMenu.classList.add('hidden');
-  hamb.firstElementChild.classList.add('fa-bars');
-  hamb.firstElementChild.classList.remove('fa-xmark');
-}));
-
-// Reveal ao rolar
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (!reduceMotion) {
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-} else {
-  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
-}
-
-// Contadores da faixa de números
-const counters = document.querySelectorAll('[data-count]');
-const ioNum = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    ioNum.unobserve(e.target);
-    const target = +e.target.dataset.count;
-    if (reduceMotion) { e.target.textContent = target; return; }
-    const start = performance.now(), dur = 1200;
-    const tick = now => {
-      const p = Math.min((now - start) / dur, 1);
-      e.target.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  });
-}, { threshold: 0.5 });
-counters.forEach(c => ioNum.observe(c));
-
-// Slider antes/depois
-const ba = document.getElementById('baSlider');
-const baAfter = ba.querySelector('.ba-after');
-const baHandle = document.getElementById('baHandle');
-function setBA(clientX) {
-  const r = ba.getBoundingClientRect();
-  const pct = Math.max(0, Math.min(100, ((clientX - r.left) / r.width) * 100));
-  baAfter.style.clipPath = `inset(0 0 0 ${pct}%)`;
-  baHandle.style.left = pct + '%';
-}
-let dragging = false;
-ba.addEventListener('pointerdown', e => { dragging = true; ba.setPointerCapture(e.pointerId); setBA(e.clientX); });
-ba.addEventListener('pointermove', e => { if (dragging) setBA(e.clientX); });
-ba.addEventListener('pointerup', () => dragging = false);
-ba.addEventListener('pointercancel', () => dragging = false);
-</script>
+<script src="js/script.js"></script>
 </body>
 </html>
